@@ -2,6 +2,7 @@
 const eventList = document.getElementById('event-list');
 const eventForm = document.getElementById('event-form');
 const noEvenstMessage = document.getElementById('no-events');
+const searchInput = document.getElementById('event-search');
 
 //local storage initialization
 let events =JSON.parse(localStorage.getItem('events')) || [];
@@ -11,14 +12,29 @@ function saveToLocalStorage() {
     localStorage.setItem('events', JSON.stringify(events));
 }
 
-function renderEventList() {
+//searching events event listener
+searchInput.addEventListener('input', function(event) {
+    const query = event.target.value.toLowerCase(); //convert to lowercase to ensure that users dont have to think of case
+
+    //helps filtering the events
+    const filteredEvents = events.filter(event => 
+        event.name.toLowerCase().includes(query) ||
+        event.location.toLowerCase().includes(query)
+    );
+
+    //rendering filtered events
+    renderEventList(filteredEvents);
+});
+
+
+function renderEventList(filteredEvents = events) {
     eventList.innerHTML = '';
 
     if (events.length === 0) {
         noEvenstMessage.style.display = 'block';
     } else {
         noEvenstMessage.style.display = 'none';
-        events.forEach((event, index) => {
+        filteredEvents.forEach((event, index) => {
             const eventCard = document.createElement('div');
             eventCard.classList.add('event');
             eventCard.setAttribute('data-index', index);
@@ -43,7 +59,6 @@ function renderEventList() {
         });
     }
 }
-//
 
 //public api integration for the weather data
 function fetchWeather(city, eventCard, eventIndex) {
@@ -109,11 +124,7 @@ eventForm.addEventListener('submit', function(event) {
     //event card saving edited event
     saveToLocalStorage();
     renderEventList();
-
-    // Fetch weather for the event location
-    //const eventCard = document.querySelector(`[data-index="${events.length - 1}"]`);
-    //fetchWeather(location, eventCard);
-
+    
     //reset the form
     eventForm.reset();
 });

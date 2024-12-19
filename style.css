@@ -6,6 +6,8 @@
 
 /* Header Styling */
 header {
+    position: sticky;
+    top: 0;
     width: 100%;
     background-color: #2E4053; 
     color: #A9D1DB;
@@ -84,6 +86,27 @@ button {
 button:hover {
     background-color: #FFD700;
     transform: scale(1.05);
+}
+
+/* Event style section */
+.search-section {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.search-input {
+    padding: 10px;
+    width: 100%;
+    max-width: 400px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-sizing: border-box;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: #2E4053;
 }
 
 /* Event List */
