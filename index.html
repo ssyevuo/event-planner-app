@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Event Planner App</title>
+        <link rel="stylesheet" href="style.css"> <!-- link to style.css for the styling purposes -->
+    </head>
+    <body>
+        <header>
+            <h1>Event Planner App</h1>
+        </header>
+        <main>
+        <!--event planner app content-->
+
+            <section>
+            <h1>Add a New Event</h1>
+                    <!-- form for details capturing -->
+                    <form id="event-form">
+                        <label for="event-name">Event Name: </label>
+                        <input type="text" id="event-name" placeholder="Event Name" required>
+
+                        <label for="event-date">Event Date: </label>
+                        <input type="date" id="event-date" required>
+
+                        <label for="event-location">Event Location: </label>
+                        <select id="event-location"  required>
+                            <option value="">Select an Event Location</option>
+                            <option value="Nairobi">Nairobi</option>
+                            <option value="Mombasa">Mombasa</option>
+                            <option value="Kisumu">Kisumu</option>
+                            <option value="Nakuru">Nakuru</option>
+                            <option value="Eldoret">Eldoret</option>
+                            <option value="Nyeri">Nyeri</option>
+                            <option value="Thika">Thika</option>
+                            <option value="Kisii">Kisii</option>
+                            <option value="Machakos">Machakos</option>
+                            <option value="Muranga">Muranga</option>
+                        </select>
+
+                        <label for="event-description">Event Description: </label>
+                        <textarea id="event-description" placeholder="Event Description"></textarea>
+
+                        <button type="submit">Add Event</button>
+                    </form>
+            </section>
+
+            <section>
+                <h1>Upcoming Events</h1>
+                <!-- ensure that the events are displayed successfully -->
+                <div id="event-list">
+                    <p id="no-events">No events added yet. Start planning your events and lets bring them to life.</p>                
+                </div>
+            </section>
+        </main>
+
+        <!--footer-->
+        <footer>
+            <p>&copy; 2024 Event Planner App. All rights reserved.</p>
+        </footer>
+
+        <!--link to the script-->
+        <script src="event.js"></script>
+    </body>
+</html>
