@@ -21,6 +21,7 @@ function renderEventList() {
         events.forEach((event, index) => {
             const eventCard = document.createElement('div');
             eventCard.classList.add('event');
+            eventCard.setAttribute('data-index', index);
 
             eventCard.innerHTML = `
                 <h3 class="event-name">${event.name}</h3>
@@ -29,8 +30,8 @@ function renderEventList() {
                 <p class="event-description">${event.description}</p>
                 ${event.weather ? `<p><strong>Weather: </strong> ${event.weather}</p>` : ''}
                 ${event.temperature ? `<p><strong>Temperature: </strong> ${event.temperature}°C</p>` : ''}
-                <button class="event-button delete-button">Delete</button>
-                <button class="event-button edit-button">Edit</button>
+                <button class="event-button delete-button" data-index="${index}">Delete</button>
+                <button class="event-button edit-button" data-index="${index}">Edit</button>
             `;
 
             //fetching the weather
@@ -42,6 +43,7 @@ function renderEventList() {
         });
     }
 }
+//
 
 //public api integration for the weather data
 function fetchWeather(city, eventCard, eventIndex) {
@@ -91,15 +93,26 @@ eventForm.addEventListener('submit', function(event) {
         return;
     }
 
-    //event card
-    const newEvent = { name, date, location, description };
-    events.push(newEvent);
+    const editIndex = document.getElementById('event-form').dataset.editIndex;
+
+    if (editIndex !== undefined) {
+        // Update the event
+        events[editIndex] = { name, date, location, description };
+        delete document.getElementById('event-form').dataset.editIndex; // Remove edit index
+    } else {
+        // Add new event
+        const newEvent = { name, date, location, description };
+        events.push(newEvent);
+    }
+
+
+    //event card saving edited event
     saveToLocalStorage();
     renderEventList();
 
     // Fetch weather for the event location
-    const eventCard = document.querySelector(`[data-index="${events.length - 1}"]`);
-    fetchWeather(location, eventCard);
+    //const eventCard = document.querySelector(`[data-index="${events.length - 1}"]`);
+    //fetchWeather(location, eventCard);
 
     //reset the form
     eventForm.reset();
@@ -128,10 +141,7 @@ eventList.addEventListener('click', function(event) {
         document.getElementById('event-location').value = eventData.location;
         document.getElementById('event-description').value = eventData.description;
 
-        //updating as changed
-        events.splice(index, 1);
-        saveToLocalStorage();
-        renderEventList();
+        document.getElementById('event-form').dataset.editIndex = index;
     }
 });
 
